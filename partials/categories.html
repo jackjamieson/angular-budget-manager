@@ -1,0 +1,92 @@
+<div class="container">
+  <h1></h1>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <fieldset>
+
+          <!-- Form Name -->
+          <legend>Transaction Categories</legend>
+
+<div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Income Sources</h3>
+            </div>
+            <div class="panel-body">
+
+              <!-- Select Basic -->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="selectbasic">Existing Sources</label>
+                <div class="col-md-5">
+                  <select class="form-control" ng-options="item.value.income_source for item in sources.rows" ng-change="updateList()" ng-model="selectedSource"></select>
+                </div>
+                <div class="col-md-3">
+                  <button name="deleteSourceButton" ng-click="deleteIncomeSource()" class="btn btn-danger">Delete Source</button>
+                </div>
+              </div>
+
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="description">New Income Source</label>
+                <div class="col-md-5">
+                  <input id="description" ng-model="nsource.income_source" name="description" placeholder="Source" class="form-control input-md" type="text"></input>
+                </div>
+                <div class="col-md-3">
+                  <button id="singlebutton" name="singlebutton2"  ng-click="addIncomeSource()" class="btn btn-success">Add</button>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Expense Categories</h3>
+              </div>
+              <div class="panel-body">
+
+              <!-- Select Basic -->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="selectbasic">Existing Categories</label>
+                <div class="col-md-5">
+                  <select class="form-control" ng-options="item.value.expense_category for item in expenses.rows" ng-change="updateListExpense()" ng-model="selectedCategoryExpense"></select>
+                </div>
+                <div class="col-md-3">
+                  <button id="singlebuttonex" name="singlebutton"  class="btn btn-danger">Delete Category</button>
+                </div>
+              </div>
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="description">New Expense Category</label>
+                <div class="col-md-5">
+                  <input id="description" ng-model="ncategory.expense_category" name="description" placeholder="Category" class="form-control input-md" type="text"></input>
+                </div>
+                <div class="col-md-3">
+                  <button id="singlebutton" name="singlebutton" ng-click="addExpenseCategory()" class="btn btn-success">Add</button>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+
+</div>

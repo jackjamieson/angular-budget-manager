@@ -1,0 +1,107 @@
+
+<div class="container">
+  <h1></h1>
+
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <center><img id="loading" style="display:none;" src="img/ajax-loader.gif"/></center>
+      <form class="form-inline">
+        <fieldset>
+
+          <!-- Form Name -->
+          <legend>Report Generator</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="selectbasic">Type</label>
+            <div class="col-md-4">
+              <select id="selectbasic" ng-model="reportui.type" name="selectbasic" class="form-control">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="selectbasic">Year</label>
+            <div class="col-md-4">
+              <select id="year" ng-model="reportui.year" name="year" class="form-control">
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="selectbasic">Month</label>
+            <div class="col-md-4">
+              <select id="month" ng-model="reportui.month" name="month" class="form-control">
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+              <button id="singlebutton" name="singlebutton" ng-click="updateOptions(reportui.type, reportui.year, reportui.month)" class="btn btn-default">Search</button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+      <br/>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Summary</h3>
+        </div>
+        <div class="panel-body">
+          Panel content
+        </div>
+      </div>
+
+      <div class="panel panel-default" >
+        <div class="panel-heading">
+          <h3 class="panel-title">Details</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Source/Category</th>
+                <th>Description</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody >
+              <tr  ng-repeat="entry in report.rows">
+                <td ng-class='{green : entry.value.type == "income", red : entry.value.type == "expense"}'> ${{entry.value.amount}} </td>
+                <td> {{entry.value.source || entry.value.expense_category}} </td>
+                <td> {{entry.value.description }} </td>
+                <td> <button ng-click="delete2($index, entry.value._id, entry.value._rev)" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

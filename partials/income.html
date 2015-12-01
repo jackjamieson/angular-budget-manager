@@ -1,0 +1,85 @@
+<div class="container">
+  <h1></h1>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form class="form-horizontal" ng-submit="processForm()">
+        <fieldset>
+
+          <!-- Form Name -->
+          <legend>Add Income</legend>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="selectbasic">Year</label>
+            <div class="col-md-4">
+              <select id="year" ng-model="income.year" name="year" class="form-control">
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="month">Month</label>
+            <div class="col-md-4">
+              <select id="month" ng-model="income.month" name="month" class="form-control">
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="selectbasic">Source</label>
+            <div class="col-md-4">
+              <select class="form-control" ng-options="item.value.income_source for item in sources.rows" ng-change="updateList()" ng-model="selectedSource"></select>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="description">Description</label>
+            <div class="col-md-4">
+              <input id="description" ng-model="income.description" name="description" placeholder="Description" class="form-control input-md" type="text"></input>
+            </div>
+          </div>
+
+          <!-- Prepended text-->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="prependedtext">Amount</label>
+            <div class="col-md-4">
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input id="amount" ng-model="income.amount" name="amount" class="form-control" placeholder="0" required="" type="number" />
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-1 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+              <button id="singlebutton" name="singlebutton" class="btn btn-success">Add</button>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+</div>
