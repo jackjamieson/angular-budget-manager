@@ -14,10 +14,10 @@ app.controller('CategoriesController', function($scope, $http){
   $scope.ncategory = {};
 
   $scope.theItem = {};
+  $scope.theExpenseItem = {};
 
   $scope.updateList = function() {
     $scope.theItem = $scope.selectedSource;
-    console.log($scope.theItem);
   };
 
   // perform a delete from the list
@@ -81,7 +81,8 @@ app.controller('CategoriesController', function($scope, $http){
     .success(function(data) {
       $scope.getIncomeSources();
       $scope.nsource = "";
-
+      $scope.addedSource = true;
+      $scope.addedCategory = false;
     });
   };
 
@@ -98,7 +99,34 @@ app.controller('CategoriesController', function($scope, $http){
     .success(function(data) {
       $scope.getExpenseCategories();
       $scope.ncategory = "";
+      $scope.addedCategory = true;
+      $scope.addedSource = false;
     });
+  };
+
+  // perform a delete from the list
+  $scope.deleteExpenseCategory = function(){
+
+    var resp = confirm("Are you sure you want to delete this category?");
+    if(resp == true){
+
+      //TODO we could make it so that this doesn't refresh the page
+      //$scope.sources.rows.splice( index, 1 );// update the client side so it appears instant
+
+      $http({
+        url : 'http://127.0.0.1:5984/budgetdb/' + $scope.theExpenseItem.value._id + '?rev=' + $scope.theExpenseItem.value._rev,
+        method : 'DELETE'
+      })
+      .success(function(message) {
+        location.reload();
+      });
+
+    }
+
+  };
+
+  $scope.updateListExpense = function() {
+    $scope.theExpenseItem = $scope.selectedCategoryExpense;
   };
 
   $scope.getIncomeSources();
@@ -155,13 +183,8 @@ app.controller('IncomeController', function( $scope, $http) {
       data: $scope.income,
     })
     .success(function(data) {
+      $scope.addedIncome = true;
 
-      if(!data.success) {
-
-      }
-      else {
-
-      }
     });
   };
 });
@@ -214,7 +237,7 @@ app.controller('ExpenseController', function( $scope, $http) {
       data: $scope.expense,
     })
     .success(function(data) {
-
+      $scope.addedExpense = true;
 
     });
   };
@@ -224,6 +247,9 @@ app.controller('ReportsController', function($scope, $http) {
 
   $scope.report = {}; // the initial report object
   $scope.reportui = {};
+
+  $scope.monthlyIncome = 0;
+  $scope.monthlyExpense = 0;
 
   // perform a delete from the table
   $scope.delete2 = function(index, id, rev){
@@ -254,13 +280,57 @@ app.controller('ReportsController', function($scope, $http) {
     })
     .success(function(data) {
       $scope.report = data;
+      for(var i = 0; i < data.rows.length; i++){
+        $scope.monthlyIncome += data.rows[i].value.amount;
+      }
+    });
+
+    $http({
+      url : 'http://127.0.0.1:5984/budgetdb/_design/bexpense/_view/current_month_expenses',
+      type : 'GET'
+    })
+    .success(function(data) {
+      for(var i = 0; i < data.rows.length; i++){
+        $scope.monthlyExpense += data.rows[i].value.amount;
+      }
     });
   };
 
   $scope.update();
 
   $scope.updateOptions = function(type, year, month) {
+    $scope.monthlyIncome = 0;
+    $scope.monthlyExpense = 0;
 
+    // TODO: make the monthly values update when something is deleted
+
+    // calculate the monthly values
+    $http({
+      url : 'http://127.0.0.1:5984/budgetdb/_design/bincome/_view/incomes_' + year + '?key="' + month + '"',
+      type : 'GET'
+    })
+    .success(function(data) {
+
+      for(var i = 0; i < data.rows.length; i++){
+        $scope.monthlyIncome += data.rows[i].value.amount;
+
+      }
+    });
+
+    $http({
+      url : 'http://127.0.0.1:5984/budgetdb/_design/bexpense/_view/expenses_' + year + '?key="' + month + '"',
+      type : 'GET'
+    })
+    .success(function(data) {
+
+      for(var i = 0; i < data.rows.length; i++){
+        $scope.monthlyExpense += data.rows[i].value.amount;
+
+      }
+    });
+
+
+    // calculate the details
     if(type === 'income' && year === '2015'){
       $http({
         url : 'http://127.0.0.1:5984/budgetdb/_design/bincome/_view/incomes_2015?key="' + month + '"',
